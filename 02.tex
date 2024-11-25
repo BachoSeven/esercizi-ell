@@ -31,9 +31,33 @@
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\Z}{\mathbb{Z}}
 \renewcommand{\L}{\mathcal{L}}
+\newcommand{\Qp}{\Q_p}
+\newcommand{\Fpp}{\overline{\mathbb{F}}_p}
+
+% Sha for the Tate-Shafarevich group
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\Sh}{\mathord}{mcy}{"58} 
+
+\newcommand{\E}{E(\Qp)^{(1)}}
+\newcommand{\En}{E(\Qp^{nr})^{(0)}}
 
 \renewcommand{\div}{\operatorname{div}}
 \renewcommand{\k}{\kappa}
+
+% Display math   
+\newcommand{\ssfrac}[2]{
+        \raisebox{+0.3ex}{$#1$}
+        /
+        \raisebox{-0.3ex}{$#2$}
+}
+% Inline math
+\newcommand{\sfrac}[2]{
+        \raisebox{+0.3ex}{\scalebox{0.9}{$#1$}}
+        /
+        \raisebox{-0.3ex}{\scalebox{0.9}{$#2$}}
+}                      
 
 % use bullets for items
 \renewcommand{\labelitemii}{$\circ$}
@@ -63,9 +87,103 @@
 \begin{document}
 \maketitle
 
-\textbf{1. }
+\textbf{4. }
+\begin{itemize}
+    \item[(a)] We proceed by contradiction: suppose that some $(a,b)\in(\Qp)^2$ is a lift of $(0,0)$ and lies on $E(\Qp)$, that is
+        \[
+            \begin{cases}
+                a^2=b^3+p \\
+                a\equiv b\equiv 0 ~(\text{mod } p)
+            \end{cases}
+        \]
+        Then, the second condition implies $v_p(a),v_p(b)\geq 1$, but then by the first condition
+        we find a contradiction:
+        \[
+            1=v_p(p)=v_p(a^2-b^3)\geq \min\{2v_p(a),3v_p(b)\}   \geq 2.
+        \]
+
+    \item[(b)] Let $n\geq 1$, and take $E$ to be the elliptic over $\Qp$ with affine equation
+        \[
+            y^2=x^3+p^{2n}
+        \]
+        Then, $Q\coloneqq (0,p^n)$ is a lift of the point $(0,0)$ on the reduction of $E$ modulo $p$ and it lies on $E(\Qp)$. Moreover, $E$ has additive reduction as $\overline{E}$ has affine equation $y^2=x^3$.
+\end{itemize}
+
+\textbf{5. }(in collaboration with Antonio di Nunzio)
+
+The fact that $\E$ is uniquely $m$-divisible for all $m$ prime to $p$ implies that, for such $m$, multiplication by $m$ is injective on $\E$.
+In other words, the following composition is injective for any $m$ prime to $p$
+\[
+    E(\Qp)[m] \hookrightarrow E(\Qp) \twoheadrightarrow \ssfrac{E(\Qp)}{\E},
+\]
+and the last term is finite by the filtration of $E(\Qp)$ analysed in class. Thus, we get that
+\[
+    \bigcup_{(m,p)=1} E(\Q)[m]\subset \bigcup_{(m,p)=1} E(\Qp)[m] \hookrightarrow \ssfrac{E(\Qp)}{\E}
+\]
+is finite as well. But then, the set $S$ of prime numbers $q$ different from $p$ such that $E(\Q)[q]$ is non-trivial must be finite (since all such $q$ are prime to $p$), say
+\[
+    S=\{q_1,\ldots,q_n\}.
+\]
+Therefore, if $m$ is not divisible by any of the $q_i$, for any point $Q\in E(\Q)$ we have
+\[
+    m p^k Q = 0 \implies p^k Q = 0
+\]
+for any $k\geq 1$, which means that $E(\Q)[m p^k]\subset E(\Q)[p^k]$.
+
+We are thus left to show that the $m$-torsion is finite for all $m$ of the form \[m=p^k q_1^{e_1}\cdots q_n^{e_n},\] where $k\geq 1$ and $e_i\geq 0$ for all $i$. For this, it's enough to take a prime number $l$ different from $p$ and from the $q_i$. Then, by the same argument as before we get an injection in a finite quotient
+\[
+    E(\Q)[m] \hookrightarrow \ssfrac{E(\Q)}{E(\Q)[l]},
+\]
+which concludes the proof.
+
+\textbf{6. }
+\begin{itemize}
+    \item[(a)] Take any point $Q$ in $\En$. Then, by definition its reduction $r(Q)$ is a smooth point of $\overline{E}(\Fpp)$. We know that, for an algebraically closed field, these smooth points form an abelian group which is isomorphic to either the additive or the multiplicative group of the field, and that both $(\Fpp,+)$ as well as $(\Fpp^\times,\cdot)$ are $m$-divisible for all $m$ prime to $p$.
+
+        Thus, there exists a point $\overline{P}\in \overline{E}(\Fpp)_{\text{smooth}}$ such that $m\overline{P}=r(Q)$, and if $\overline{P}$ has coordinates in $\mathbb{F}_{p^l}$ for some $k$, we can use Hensel's lemma to lift $\overline{P}$ to a point $P\in E(K_l)$. Now, since the reduction map $r$ is a group homomorphism, we have
+        \[
+            r(mP)=m r(P)=r(Q) \implies mP-Q\in E(\Qp^{nr})^{(1)}.
+        \]
+        If we choose $n$ so that $mP-Q$ lies in the (uniquely) $m$-divisible group $E(K_n)^{(1)}$, we find some $P^\prime\in E(K_n)^{(1)}$ such tat
+        \[
+            mP^\prime=mP-Q \iff m(P-P^\prime)=Q,
+        \]
+        and we are done.
+
+    \item[(b)]
+\end{itemize}
+
+\textbf{7. }
+\begin{itemize}
+    \item[(a)] The implication $\Rightarrow$ is trivial, since if $\Sh(E)$ is finite group then it is killed by $N=\#\Sh(E)$. Conversely, suppose that $N\Sh(E)=0$ for some $N>0$; this implies that
+        \[
+            \Sh(E)=\Sh(E)[N],
+        \] and we have seen in class that $\Sh(E)[m]$ is finite for all $m\geq 1$. Thus, $\Sh(E)$ is finite.
+    \item[(b)] Let $G$ be the absolute Galois group $\operatorname{Gal}(\overline{\Q}/\Q)$ of $\Q$.
+        The existence of an isogeny between $E$ and $E^\prime$ gives us an exact sequence
+        \[
+            0 \to K \to E \to E^\prime \to E
+        \]
+        of $G$-modules, where $K$ is the finite kernel of the isogeny. Then, the associated long exact sequence in cohomology yields a commutative diagram with exact rows
+        \begin{center}
+            \begin{tikzcd}
+                0 \ar[r] \ar[d] & K^\prime \ar[r] \ar[d] & \Sh(E) \ar[r] \ar[d] & \Sh(E^\prime) \ar[d] \\
+                E^\prime(\Q) \ar[r] \ar[d] & H^1(\Q,K) \ar[r] \ar[d] & H^1(\Q,E) \ar[d] \ar[r] & H^1(\Q,E^\prime) \ar[d]\\
+                \prod_v E^\prime(\Q_v) \ar[r] & \prod_v H^1(\Q_v,K) \ar[r] & \prod_v H^1(\Q_v,E) \ar[r] & \prod_v H^1(\Q_v,E^\prime)
+            \end{tikzcd}
+        \end{center}
+        Here, $v$ ranges all prime numbers plus the archimedean place, and the vertical maps into the products are given by restriction maps. We can place a zero in the top left because restriction on the $H^0$ is given by inclusion of the $\Q$-points into the $\Q_v$-points.
+
+        Note that the kernel $K^\prime$ is a torsion group killed by the order $m$ of the finite $G$-module $K$: indeed, it is a subgroup of $H^1(\Q,K)$, which is an inductive limit of torsion groups each killed by $m$. Setting $K^{\prime\prime}$ to be the cokernel of $\Sh(E)\to\Sh(E^\prime)$, we find an exact sequence of abelian groups
+        \[
+            0 \to K^\prime \to \Sh(E) \to K^{\prime\prime} \to 0
+        \]
+        where $K^{\prime\prime}$ is a finite group killed by the order $n$ of $\Sh(E^\prime)$.
+
+        But then $\Sh(E)$ must be killed by $m$ times $n$, and thus point (a) implies
+        the finiteness of $\Sh(E)$.
 
 
-\textbf{2. }(in collaboration with Antonio di Nunzio)
+\end{itemize}
 
 \end{document}
