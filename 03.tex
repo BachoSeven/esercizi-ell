@@ -1,0 +1,172 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+% many useful symbols
+\usepackage{textcomp}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+% for \lightning
+\usepackage{stmaryrd}
+\usepackage{geometry}
+\usepackage{tikz-cd}
+\usepackage{cancel}
+
+\hypersetup{
+    colorlinks = true, % links instead of boxes
+    urlcolor   = cyan, % external hyperlinks
+    linkcolor  = blue, % internal links
+    citecolor  = cyan   % citations
+}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Qp}{\Q_p}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\Fq}{\mathbb{F}_q}
+\newcommand{\Fpp}{\overline{\mathbb{F}}_p}
+\newcommand{\Fqq}{\overline{\mathbb{F}}_q}
+
+% Sha for the Tate-Shafarevich group
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\Sh}{\mathord}{mcy}{"58}
+
+\newcommand{\E}{\overline{E}}
+
+\renewcommand{\div}{\operatorname{div}}
+\renewcommand{\k}{\kappa}
+
+% Display math
+\newcommand{\ssfrac}[2]{
+        \raisebox{+0.3ex}{$#1$}
+        /
+        \raisebox{-0.3ex}{$#2$}
+}
+% Inline math
+\newcommand{\sfrac}[2]{
+        \raisebox{+0.3ex}{\scalebox{0.9}{$#1$}}
+        /
+        \raisebox{-0.3ex}{\scalebox{0.9}{$#2$}}
+}
+
+% use bullets for items
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Esercizio}[section]
+\newtheorem*{exercise*}{Esercizio}
+
+\title{Elliptic Curves - Homework 3}
+\author{Francesco Minnocci}
+
+\begin{document}
+\maketitle
+
+\textbf{8.}
+To find an isomorphism between
+$C: x^2+y^2+z^2=0$ and $\mathbb{P}^1_{\overline{\mathbb{Q}}}$, we first observe that $C$ is isomorphic to $C^\prime: x^2++y^2=z^2$ via
+\begin{align*}
+        C^\prime & \to C             \\
+        [x:y:z]  & \mapsto [x:y:iz],
+\end{align*}
+with inverse $[x:y:z] \mapsto [x:y:-iz]$. Furthermore, $C^\prime$ is isomorphic to $\mathbb{P}^1_{\overline{\mathbb{Q}}}$ via the map constructed in the first homework,and we can compose the two isomorphisms to get
+\begin{align*}
+        \varphi:\mathbb{P}^1_{\overline{\mathbb{Q}}} & \to C                             \\
+        [x:y]                                        & \mapsto [y^2-x^2:2xy:i(x^2+y^2)],
+\end{align*}
+whose inverse is given by the morphism
+\begin{align*}
+        \varphi^{-1}:C & \longrightarrow \mathbb{P}^1_{\overline{\mathbb{Q}}} \\
+        [x:y:z]        & \longmapsto \begin{cases}
+                                             [y:x-iz]\text{ if } y(x-iz)\neq 0   \\
+                                             [-x-iz:y]\text{ if } y(-x-iz)\neq 0 \\
+                                     \end{cases}
+\end{align*}
+We have thus found an isomorphism between $C$ and $\mathbb{P}^1_{\overline{\mathbb{Q}}}$ over $\overline{\mathbb{Q}}$, which shows that $C$ is a twisted form of $\mathbb{P}^1_\mathbb{Q}$. To find a corresponding cocycle, notice that $\varphi$ is already defined over $\mathbb{Q}(i)$. This means that the action of $\operatorname{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$ on the group $\operatorname{Aut}(\mathbb{P}^1_{\overline{\mathbb{Q}}})$ factors through $\operatorname{Gal}(\mathbb{Q}(i)/\mathbb{Q})$, and so
+for $\sigma \in \operatorname{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$ we have that
+\[
+        \varphi^{-1}\circ \sigma(\varphi)=\varphi^{-1}\circ(\sigma\circ\varphi\circ\sigma^{-1}): \mathbb{P}^1_{\overline{\mathbb{Q}}}  \longrightarrow \mathbb{P}^1_{\overline{\mathbb{Q}}}
+\]
+sends
+\begin{align*}
+        [x:y] & \longmapsto \begin{cases}
+                                    [x:y]  & \text{ if }   \sigma(i)=i  \\
+                                    [-y:x] & \text{ if }  \sigma(i)=-i,
+                            \end{cases}
+\end{align*}
+which can be checked directly by the explicit formulas for $\varphi$ and $\varphi^{-1}$.
+
+\textbf{9.} In the following, we denote by $\E$ the $\Fqq$-points of the elliptic curve $E$.
+
+\noindent Taking the exact sequence
+\begin{equation*}
+        0 \to \E[\ell] \to \E \to \E \to 0
+\end{equation*}
+yields a following exact sequence in cohomology:
+\[
+        \begin{tikzcd}
+                \cdots \ar[r] & E(\Fq) \ar[r, "\ell"] &E(\Fq) \ar[r] &H^1(\Fq, \E[\ell]) \ar[r] &\cancel{H^1(\Fq, \E)} \ar[r] &\cdots
+        \end{tikzcd}
+\]
+where the last term is zero by Lemma 12.12 in the notes. In others words, the group $H^1(\Fq, \E[\ell])$ is a quotient of the finite abelian group $E(\Fq)$, hence finite itself.
+
+Finally, for all but finitely many $\ell$ (all except those dividing the order of $E(\Fq)$), multiplication by $\ell$ is an automorphism of the group $E(\Fq)$, which in particular has trivial cokernel $H^1(\Fq, \E[\ell])$. This shows that the group $H^1(\Fq, \E[\ell])$ is trivial for all but finitely many $\ell$.
+
+\textbf{10.} (in collaboration with Marco Sanna)
+\noindent Let $\overline{K}$ be a fixed algebraic closure of $K$. By the N\'eron-Ogg-Shafarevich criterion, the curve $E$ has good reduction if and only the whole Tate module is
+fixed by the inertia subgroup $I$.
+
+In the case of bad reduction, we will show that $E$ cannot have additive reduction over $K^{\text{nr}}$; this implies that it has either good reduction over $K^{\text{nr}}$ (and we have seen that in
+this case $E$ has good reduction over $K$) or multiplicative reduction over $K^{\text{nr}}$. In this last case, $E$ must also have multiplicative reduction over $K$ (which is our goal); indeed, if the $E$ has equation $y^2 = x^3 + Ax + B$ over $K$ with discriminant $\Delta$, assume by contradiction that $E$ has additive reduction over $K$ (that is, up to translation $\overline{A} = \overline{B} = 0$). Then, since $E$ has multiplicative reduction over $K^{\text{nr}}$, the valuation $v_{K^{\text{nr}}}(\Delta)$ cannot be minimal, and so there is some coordinate change
+\[
+        x = u^2 x', \quad y = u^3 y'
+\]
+sends $\Delta$ to $u^{-12}\Delta$, and
+\[
+        v_{K^{\text{nr}}}(u^{-12}\Delta) < v_{K^{\text{nr}}}(\Delta)=v_K(\Delta).
+\]
+Now, after fixing a uniformizer $\pi$ of
+$\mathcal{O}_K$ (which is also a uniformizer of $\mathcal{O}_{K^{\text{nr}}}$), we can write $u$ as $w\cdot \pi^r$ for some $w \in \mathcal{O}_{K^{\text{nr}}}$ and $r \in \Z$. Then, we have
+we can write $u$ as $w\cdot \pi^r$, and the coordinate change
+\[
+        x \to \pi^{2r}x, \quad y \to \pi^{3r}y
+\]
+sends $\Delta$ to $\pi^{-12r}\Delta$, which contradicts the minimality of $v_K(\Delta)$:
+\[
+        v_K(\pi^{-12r}\Delta) = v_{K^{\text{nr}}}(u^{-12}\Delta) < v_K(\Delta).
+\]
+Suppose now that $E$ has additive reduction over
+$K^{\text{nr}}$, and let $\kappa$ be the residue field of $K^{\text{nr}}$. As in the proof of Theorem 13.4, we first choose $m$ large enough such that
+$$l^m> |\sfrac{E(K^{\text{nr}})}{E(K^{\text{nr}})^{(0)}}|.$$
+By assumption, there is some non-trivial element $(P_i)$ of $T_\ell(E)$ which is fixed by $I$. Setting
+\[
+        \overline{n}\coloneqq \min\{n:\,\pi_n((P_i))\neq O\},
+\]
+by definition of $T_\ell(E)$ this means that
+\[Q:=\pi_{\overline{n}+m-1}((P_i))\]
+has order $\ell^m$, and since $Q$ is fixed by $I$, it is defined over $K^{\text{nr}}$. By our choice of $m$, the order $\ell$ subgroup generated by $(l^{m-1}Q)$ must be contained in $E(K^{\text{nr}})^{(0)}[l]$, but since $E(K^{\text{nr}})^{(1)}$ has no $\ell$-torsion, the reduction map $r$ is an injection on $E(K^{\text{nr}})^{(0)}[l]$, which should send $(l^{m-1}Q)$ to a point of order $\ell$ in $\overline{E}(\kappa)_\text{smooth}\simeq \kappa^{+}\simeq \Fpp^{+}$; this yields a contradiction, since $\Fpp^{+}$ has no points of order $\ell$ for $\ell\neq p$.
+
+\end{document}
